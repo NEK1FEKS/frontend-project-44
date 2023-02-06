@@ -4,3 +4,4 @@
 <a href="https://codeclimate.com/github/NEK1FEKS/frontend-project-44/maintainability"><img src="https://api.codeclimate.com/v1/badges/29769b582c358a3c2837/maintainability" /></a>
 
 Asciinema brain-even: https://asciinema.org/a/557580
+Asciinema brain-calc: https://asciinema.org/a/557690
