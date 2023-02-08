@@ -18,7 +18,6 @@ const brainEven = () => {
       break;
     }
     console.log('Correct!');
-    // curCorrect += 1;
   }
   if (curCorrect === 3) {
     console.log(`Congratulations, ${userName}!`);
