@@ -9,11 +9,11 @@ const brainEven = () => {
     const randomNum = Math.floor(Math.random() * 100);
     const answer = readlineSync.question(`${'Question: '}${randomNum}${'\nYour answer: '}`);
     if (randomNum % 2 !== 0 && answer !== 'no') {
-      console.log(`'${answer}' is wrong answer ;(. Correct answer was 'no'`);
+      console.log(`'${answer}' is wrong answer ;(. Correct answer was 'no'.`);
       console.log(`Let's try again, ${userName}!`);
       break;
     } else if (randomNum % 2 === 0 && answer !== 'yes') {
-      console.log(`'${answer}' is wrong answer ;(. Correct answer was 'yes'`);
+      console.log(`'${answer}' is wrong answer ;(. Correct answer was 'yes'.`);
       console.log(`Let's try again, ${userName}!`);
       break;
     }
