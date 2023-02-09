@@ -12,6 +12,7 @@ const progression = () => {
     const missingElement = Math.floor(Math.random() * sizeOfArray);
     const startNumber = Math.floor(Math.random() * 100);
     const progressionMovement = Math.floor(Math.random() * 100);
+    let answerForMissingElement;
     array.push(startNumber);
 
     for (let j = 1; j < sizeOfArray; j += 1) {
@@ -20,10 +21,15 @@ const progression = () => {
     array[missingElement] = '..';
 
     const stringFromArray = array.join(' ');
+    if (missingElement === 0) {
+      answerForMissingElement = array[missingElement + 1] - progressionMovement;
+    } else {
+      answerForMissingElement = array[missingElement - 1] + progressionMovement;
+    }
 
     const answer = readlineSync.question(`${'Question: '}${stringFromArray}${'\nYour answer: '}`);
-    if (parseInt(answer, 10) !== progressionMovement) {
-      console.log(`'${answer}' is wrong answer ;(. Correct answer was '${progressionMovement}'.`);
+    if (parseInt(answer, 10) !== answerForMissingElement) {
+      console.log(`'${answer}' is wrong answer ;(. Correct answer was '${answerForMissingElement}'.`);
       console.log(`Let's try again, ${userName}!`);
       break;
     } else {
