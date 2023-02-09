@@ -16,11 +16,11 @@ const primeNumbers = () => {
       }
     }
     const answer = readlineSync.question(`${'Question: '}${randomNum}${'\nYour answer: '}`);
-    if ((fail === -1 && answer !== 'no') || (randomNum === 0 && answer !== 'no')) {
+    if ((fail === -1 && answer !== 'no') || (randomNum <= 1 && answer !== 'no')) {
       console.log(`'${answer}' is wrong answer ;(. Correct answer was 'no'.`);
       console.log(`Let's try again, ${userName}!`);
       break;
-    } else if (fail === 0 && answer !== 'yes') {
+    } else if (fail === 0 && answer !== 'yes' && randomNum > 1) {
       console.log(`'${answer}' is wrong answer ;(. Correct answer was 'yes'.`);
       console.log(`Let's try again, ${userName}!`);
       break;
