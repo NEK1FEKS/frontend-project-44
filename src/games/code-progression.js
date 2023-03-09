@@ -1,45 +1,35 @@
-import readlineSync from 'readline-sync';
-import greetingUserName from './cli.js';
+import startGame from '../index.js';
+import getRandomNum from '../random-number.js';
 
-const progression = () => {
-  const userName = greetingUserName();
-  console.log('What number is missing in the progression?');
-  let curCorrect = 0;
-  const array = [];
-  // console.log(array.length);
-  for (let i = 0; i < 3; i += 1, curCorrect += 1) {
-    const sizeOfArray = 5 + Math.floor(Math.random() * 6);
-    const missingElement = Math.floor(Math.random() * sizeOfArray);
-    const startNumber = Math.floor(Math.random() * 100);
-    const progressionMovement = Math.floor(Math.random() * 100);
-    let answerForMissingElement;
-    array.push(startNumber);
+const rule = 'What number is missing in the progression?';
+const array = [];
 
-    for (let j = 1; j < sizeOfArray; j += 1) {
-      array.push(array[j - 1] + progressionMovement);
-    }
-    array[missingElement] = '..';
+const game = () => {
+  array.length = 0;
+  const sizeOfArray = 5 + getRandomNum(6);
+  const missingElement = getRandomNum(sizeOfArray);
+  const startNumber = getRandomNum(100);
+  const progressionMovement = getRandomNum(100);
+  let correctAnswer;
+  array.push(startNumber);
 
-    const stringFromArray = array.join(' ');
-    if (missingElement === 0) {
-      answerForMissingElement = array[missingElement + 1] - progressionMovement;
-    } else {
-      answerForMissingElement = array[missingElement - 1] + progressionMovement;
-    }
-
-    const answer = readlineSync.question(`${'Question: '}${stringFromArray}${'\nYour answer: '}`);
-    if (parseInt(answer, 10) !== answerForMissingElement) {
-      console.log(`'${answer}' is wrong answer ;(. Correct answer was '${answerForMissingElement}'.`);
-      console.log(`Let's try again, ${userName}!`);
-      break;
-    } else {
-      console.log('Correct!');
-      array.length = 0;
-    }
+  for (let j = 1; j < sizeOfArray; j += 1) {
+    array.push(array[j - 1] + progressionMovement);
   }
-  if (curCorrect === 3) {
-    console.log(`Congratulations, ${userName}!`);
+  array[missingElement] = '..';
+
+  const curQuestion = array.join(' ');
+  if (missingElement === 0) {
+    correctAnswer = (array[missingElement + 1] - progressionMovement).toString();
+  } else {
+    correctAnswer = (array[missingElement - 1] + progressionMovement).toString();
   }
+
+  return [correctAnswer, curQuestion];
 };
 
-export default progression;
+const StartProgressionGame = () => {
+  startGame(rule, game);
+};
+
+export default StartProgressionGame;

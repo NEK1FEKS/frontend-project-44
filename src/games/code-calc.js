@@ -1,39 +1,30 @@
-import readlineSync from 'readline-sync';
-import greetingUserName from './cli.js';
+import startGame from '../index.js';
+import getRandomNum from '../random-number.js';
 
-const brainCalc = () => {
-  const userName = greetingUserName();
-  console.log('What is the result of the expression?');
-  let curCorrect = 0;
+const rule = 'What is the result of the expression?';
 
-  for (let i = 0; i < 3; i += 1, curCorrect += 1) {
-    const randomNum1 = Math.floor(Math.random() * 100);
-    const randomNum2 = Math.floor(Math.random() * 100);
-    const randomSign = Math.floor(Math.random() * 3);
-    let answer;
-    let result;
-
-    if (randomSign === 0) {
-      answer = readlineSync.question(`${'Question: '}${randomNum1} + ${randomNum2}${'\nYour answer: '}`);
-      result = randomNum1 + randomNum2;
-    } else if (randomSign === 1) {
-      answer = readlineSync.question(`${'Question: '}${randomNum1} - ${randomNum2}${'\nYour answer: '}`);
-      result = randomNum1 - randomNum2;
-    } else if (randomSign === 2) {
-      answer = readlineSync.question(`${'Question: '}${randomNum1} * ${randomNum2}${'\nYour answer: '}`);
-      result = randomNum1 * randomNum2;
-    }
-    if (parseInt(answer, 10) !== result) {
-      console.log(`'${answer}' is wrong answer ;(. Correct answer was '${result}'.`);
-      console.log(`Let's try again, ${userName}!`);
-      break;
-    } else {
-      console.log('Correct!');
-    }
+const game = () => {
+  const randomNum1 = getRandomNum(100);
+  const randomNum2 = getRandomNum(100);
+  const randomSign = getRandomNum(3);
+  let curQuestion;
+  let correctAnswer;
+  if (randomSign === 0) {
+    curQuestion = `${randomNum1} + ${randomNum2}`;
+    correctAnswer = (randomNum1 + randomNum2).toString();
+  } else if (randomSign === 1) {
+    curQuestion = `${randomNum1} - ${randomNum2}`;
+    correctAnswer = (randomNum1 - randomNum2).toString();
+  } else if (randomSign === 2) {
+    curQuestion = `${randomNum1} * ${randomNum2}`;
+    correctAnswer = (randomNum1 * randomNum2).toString();
   }
-  if (curCorrect === 3) {
-    console.log(`Congratulations, ${userName}!`);
-  }
+
+  return [correctAnswer, curQuestion];
 };
 
-export default brainCalc;
+const startCalcGame = () => {
+  startGame(rule, game);
+};
+
+export default startCalcGame;

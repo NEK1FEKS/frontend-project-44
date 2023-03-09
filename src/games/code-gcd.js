@@ -1,42 +1,38 @@
-import readlineSync from 'readline-sync';
-import greetingUserName from './cli.js';
+import startGame from '../index.js';
+import getRandomNum from '../random-number.js';
 
-const greatestСommonDvisor = () => {
-  const userName = greetingUserName();
-  console.log('Find the greatest common divisor of given numbers.');
-  let curCorrect = 0;
+const rule = 'Find the greatest common divisor of given numbers.';
 
-  for (let i = 0; i < 3; i += 1, curCorrect += 1) {
-    const randomNum1 = Math.floor(Math.random() * 100);
-    const randomNum2 = Math.floor(Math.random() * 100);
-    let quantity;
-    let remainder;
-
-    if (randomNum1 >= randomNum2) {
-      quantity = randomNum1;
-      remainder = randomNum2;
-    } else {
-      quantity = randomNum2;
-      remainder = randomNum1;
-    }
-    while (remainder !== 0) {
-      const temp = quantity % remainder;
-      quantity = remainder;
-      remainder = temp;
-    }
-
-    const answer = readlineSync.question(`${'Question: '}${randomNum1} ${randomNum2}${'\nYour answer: '}`);
-    if (parseInt(answer, 10) !== quantity) {
-      console.log(`'${answer}' is wrong answer ;(. Correct answer was '${quantity}'.`);
-      console.log(`Let's try again, ${userName}!`);
-      break;
-    } else {
-      console.log('Correct!');
-    }
+const gcd = (num1, num2) => {
+  let quantity;
+  let remainder;
+  if (num1 >= num2) {
+    quantity = num1;
+    remainder = num2;
+  } else {
+    quantity = num2;
+    remainder = num1;
   }
-  if (curCorrect === 3) {
-    console.log(`Congratulations, ${userName}!`);
+  while (remainder !== 0) {
+    const temp = quantity % remainder;
+    quantity = remainder;
+    remainder = temp;
   }
+
+  return quantity;
 };
 
-export default greatestСommonDvisor;
+const game = () => {
+  const randomNum1 = getRandomNum(100);
+  const randomNum2 = getRandomNum(100);
+  const correctAnswer = gcd(randomNum1, randomNum2).toString();
+  const curQuestion = `${randomNum1} ${randomNum2}`;
+
+  return [correctAnswer, curQuestion];
+};
+
+const startGcdGame = () => {
+  startGame(rule, game);
+};
+
+export default startGcdGame;

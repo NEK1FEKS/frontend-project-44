@@ -1,27 +1,19 @@
-import readlineSync from 'readline-sync';
-import greetingUserName from './cli.js';
+import startGame from '../index.js';
+import getRandomNum from '../random-number.js';
 
-const brainEven = () => {
-  const userName = greetingUserName();
-  console.log('Answer "yes" if the number is even, otherwise answer "no".');
-  let curCorrect = 0;
-  for (let i = 0; i < 3; i += 1, curCorrect += 1) {
-    const randomNum = Math.floor(Math.random() * 100);
-    const answer = readlineSync.question(`${'Question: '}${randomNum}${'\nYour answer: '}`);
-    if (randomNum % 2 !== 0 && answer !== 'no') {
-      console.log(`'${answer}' is wrong answer ;(. Correct answer was 'no'.`);
-      console.log(`Let's try again, ${userName}!`);
-      break;
-    } else if (randomNum % 2 === 0 && answer !== 'yes') {
-      console.log(`'${answer}' is wrong answer ;(. Correct answer was 'yes'.`);
-      console.log(`Let's try again, ${userName}!`);
-      break;
-    }
-    console.log('Correct!');
-  }
-  if (curCorrect === 3) {
-    console.log(`Congratulations, ${userName}!`);
-  }
+const rule = 'Answer "yes" if the number is even, otherwise answer "no".';
+const isEven = (num) => num % 2 === 0;
+
+const game = () => {
+  const randomNum = getRandomNum(100);
+  const correctAnswer = isEven(randomNum) ? 'yes' : 'no';
+  const curQuestion = randomNum;
+
+  return [correctAnswer, curQuestion];
 };
 
-export default brainEven;
+const startEvenGame = () => {
+  startGame(rule, game);
+};
+
+export default startEvenGame;

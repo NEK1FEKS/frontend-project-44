@@ -1,5 +1,5 @@
 #!/usr/bin/env node
 
-import greatestСommonDvisor from '../src/games/code-gcd.js';
+import startGcdGame from '../src/games/code-gcd.js';
 
-greatestСommonDvisor();
+startGcdGame();

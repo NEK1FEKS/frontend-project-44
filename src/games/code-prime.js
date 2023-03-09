@@ -1,35 +1,34 @@
-import readlineSync from 'readline-sync';
-import greetingUserName from './cli.js';
+import startGame from '../index.js';
+import getRandomNum from '../random-number.js';
 
-const primeNumbers = () => {
-  const userName = greetingUserName();
-  console.log('Answer "yes" if given number is prime. Otherwise answer "no".');
-  let curCorrect = 0;
+const rule = 'Answer "yes" if given number is prime. Otherwise answer "no".';
 
-  for (let i = 0; i < 3; i += 1, curCorrect += 1) {
-    const randomNum = Math.floor(Math.random() * 100);
-    let fail = 0;
-    for (let j = 2; j < randomNum; j += 1) {
+const game = () => {
+  const randomNum = getRandomNum(100);
+  const isPrime = (num) => {
+    if (num <= 1) {
+      return false;
+    }
+    for (let j = 2; j < num; j += 1) {
       if (randomNum % j === 0) {
-        fail -= 1;
-        break;
+        return false;
       }
     }
-    const answer = readlineSync.question(`${'Question: '}${randomNum}${'\nYour answer: '}`);
-    if ((fail === -1 && answer !== 'no') || (randomNum <= 1 && answer !== 'no')) {
-      console.log(`'${answer}' is wrong answer ;(. Correct answer was 'no'.`);
-      console.log(`Let's try again, ${userName}!`);
-      break;
-    } else if (fail === 0 && answer !== 'yes' && randomNum > 1) {
-      console.log(`'${answer}' is wrong answer ;(. Correct answer was 'yes'.`);
-      console.log(`Let's try again, ${userName}!`);
-      break;
-    }
-    console.log('Correct!');
+    return true;
+  };
+  const curQuestion = randomNum;
+  let correctAnswer;
+  if (isPrime(randomNum)) {
+    correctAnswer = 'yes';
+  } else {
+    correctAnswer = 'no';
   }
-  if (curCorrect === 3) {
-    console.log(`Congratulations, ${userName}!`);
-  }
+
+  return [correctAnswer, curQuestion];
 };
 
-export default primeNumbers;
+const startPrimeGame = () => {
+  startGame(rule, game);
+};
+
+export default startPrimeGame;
