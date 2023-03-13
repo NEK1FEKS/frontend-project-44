@@ -23,8 +23,8 @@ const getGreatestCommonDivisor = (num1, num2) => {
 };
 
 const getQuestionWithAnswer = () => {
-  const randomNum1 = getRandomNum(100) + 1;
-  const randomNum2 = getRandomNum(100) + 1;
+  const randomNum1 = getRandomNum(100);
+  const randomNum2 = getRandomNum(100);
   const correctAnswer = getGreatestCommonDivisor(randomNum1, randomNum2).toString();
   const curQuestion = `${randomNum1} ${randomNum2}`;
 
