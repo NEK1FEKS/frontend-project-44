@@ -1,36 +1,39 @@
 import startGame from '../index.js';
 import getRandomNum from '../random-number.js';
 
-const rule = 'What is the result of the expression?';
+const description = 'What is the result of the expression?';
+
+const getRandomOperator = () => {
+  const operators = ['+', '-', '*'];
+  const getRandomIndexFromArray = getRandomNum(0, 3);
+  return operators[getRandomIndexFromArray];
+};
+
+const calculator = (num1, num2, operator) => {
+  switch (operator) {
+    case '+':
+      return num1 + num2;
+    case '-':
+      return num1 - num2;
+    case '*':
+      return num1 * num2;
+    default:
+      return 'Error';
+  }
+};
 
 const getQuestionWithAnswer = () => {
-  const randomNum1 = getRandomNum(100);
-  const randomNum2 = getRandomNum(100);
-  const randomSign = getRandomNum(3);
-  let curQuestion;
-  let correctAnswer;
-  switch (randomSign) {
-    case 0:
-      curQuestion = `${randomNum1} + ${randomNum2}`;
-      correctAnswer = (randomNum1 + randomNum2).toString();
-      break;
-    case 1:
-      curQuestion = `${randomNum1} - ${randomNum2}`;
-      correctAnswer = (randomNum1 - randomNum2).toString();
-      break;
-    case 2:
-      curQuestion = `${randomNum1} * ${randomNum2}`;
-      correctAnswer = (randomNum1 * randomNum2).toString();
-      break;
-    default:
-      break;
-  }
+  const randomNum1 = getRandomNum(0, 100);
+  const randomNum2 = getRandomNum(0, 100);
+  const operator = getRandomOperator();
+  const question = `${randomNum1} ${operator} ${randomNum2}`;
+  const answer = calculator(randomNum1, randomNum2, operator).toString();
 
-  return [correctAnswer, curQuestion];
+  return [answer, question];
 };
 
 const startCalcGame = () => {
-  startGame(rule, getQuestionWithAnswer);
+  startGame(description, getQuestionWithAnswer);
 };
 
 export default startCalcGame;

@@ -1,10 +1,10 @@
 import startGame from '../index.js';
 import getRandomNum from '../random-number.js';
 
-const rule = 'What number is missing in the progression?';
+const description = 'What number is missing in the progression?';
 
-const getProgression = (arr, size, startValue, progressionValue) => {
-  arr.push(startValue);
+const getProgression = (size, startValue, progressionValue) => {
+  const arr = [startValue];
   for (let j = 1; j < size; j += 1) {
     arr.push(arr[j - 1] + progressionValue);
   }
@@ -12,24 +12,23 @@ const getProgression = (arr, size, startValue, progressionValue) => {
 };
 
 const getQuestionWithAnswer = () => {
-  const sizeOfArray = 5 + getRandomNum(6);
-  const missingElement = getRandomNum(sizeOfArray);
-  const startNumber = getRandomNum(100);
-  const progressionMovement = getRandomNum(100);
+  const minLengthProgression = 5;
+  const sizeOfArray = minLengthProgression + getRandomNum(0, 6);
+  const missingElement = getRandomNum(0, sizeOfArray);
+  const startNumber = getRandomNum(0, 100);
+  const progressionMovement = getRandomNum(0, 100);
 
-  const array = getProgression([], sizeOfArray, startNumber, progressionMovement);
+  const array = getProgression(sizeOfArray, startNumber, progressionMovement);
+
+  const answer = array[missingElement].toString();
   array[missingElement] = '..';
+  const question = array.join(' ');
 
-  const curQuestion = array.join(' ');
-  const correctAnswer = missingElement === 0
-    ? (array[missingElement + 1] - progressionMovement).toString()
-    : (array[missingElement - 1] + progressionMovement).toString();
-
-  return [correctAnswer, curQuestion];
+  return [answer, question];
 };
 
 const startProgressionGame = () => {
-  startGame(rule, getQuestionWithAnswer);
+  startGame(description, getQuestionWithAnswer);
 };
 
 export default startProgressionGame;
